@@ -20,5 +20,15 @@ go mod tidy # to install dependecies
 
 cp .env.example .env # to create a local copy of the .env
 
+#install dbmate using npm
+npm install -g dbmate
 
+# install sqlc
+go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
+
+sqlc compile && sqlc vet # to verify and vet sqlc files, should be no errors
+
+dbmate up # to run migrations and create the database, reads from .env
+
+go run . # to seed the database and start the server
 ```
