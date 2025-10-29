@@ -1,6 +1,3 @@
--- migrate:up transaction:false
-CREATE DATABASE sqlc_go;
-
 -- migrate:up
 -- uuid-ossp extension is required for generating UUIDs
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
