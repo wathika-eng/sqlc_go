@@ -1,0 +1,15 @@
+version: "2"
+sql:
+    - engine: "postgresql"
+      # db queries
+      queries: "./pkg/migrations/query.sql"
+      # migrations
+      schema: "./pkg/migrations/20251029082820_create_users.sql"
+      gen:
+          go:
+              package: "repository"
+              # package out
+              out: "pkg/repository"
+              sql_package: "pgx/v5"
+              emit_prepared_queries: true
+              emit_json_tags: true
