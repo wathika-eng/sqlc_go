@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"sql_c/pkg/repository"
+	"strings"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
@@ -54,6 +55,7 @@ func (r *Repo) CreateUser(c *fiber.Ctx) error {
 			"message": err.Error(),
 		})
 	}
+	u.Email = strings.ToLower(strings.TrimSpace(u.Email))
 
 	user, err := r.db.CreateUser(context.Background(), u)
 	if err != nil {
@@ -64,4 +66,16 @@ func (r *Repo) CreateUser(c *fiber.Ctx) error {
 		"success": true,
 		"data":    user,
 	})
+}
+
+func (r *Repo) FindUser(c *fiber.Ctx) error {
+	qEmail := c.Query("email", "")
+	if strings.Trim(qEmail, " ") == "" {
+		return c.Redirect("/users")
+	}
+	user, err := r.db.GetUserByEmail(context.Background(), qEmail)
+	if err != nil {
+		return c.Status(400).JSON(fiber.Map{"error": err.Error()})
+	}
+	return c.JSON(user)
 }

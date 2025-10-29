@@ -7,6 +7,7 @@ package repository
 
 import (
 	"context"
+	"log"
 
 	"github.com/jackc/pgx/v5/pgtype"
 )
@@ -131,7 +132,7 @@ SELECT
 FROM users
 WHERE
     email = $1
-    AND deleted = FALSE
+    
 `
 
 type GetUserByEmailRow struct {
@@ -145,6 +146,7 @@ type GetUserByEmailRow struct {
 }
 
 func (q *Queries) GetUserByEmail(ctx context.Context, email string) (GetUserByEmailRow, error) {
+	log.Println(email)
 	row := q.db.QueryRow(ctx, getUserByEmail, email)
 	var i GetUserByEmailRow
 	err := row.Scan(

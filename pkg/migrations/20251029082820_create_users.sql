@@ -2,9 +2,11 @@
 -- uuid-ossp extension is required for generating UUIDs
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+CREATE DATABASE IF NOT EXISTS sqlc_go;
+
 CREATE TYPE user_role AS ENUM ('admin', 'user', 'guest');
 
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid (),
     email VARCHAR(25) UNIQUE NOT NULL,
     phone_number VARCHAR(15) UNIQUE NOT NULL,

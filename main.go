@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"sql_c/pkg/repository"
+	"sql_c/pkg/seed"
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
@@ -48,11 +49,13 @@ func main() {
 	if err != nil {
 		log.Fatalf("error: %v", err.Error())
 	}
-	repo.seed()
+	seed.Seeder(repo.db)
+	//repo.seed()
 	app := fiber.New()
 
 	app.Get("/users", repo.GetUsers)
 	app.Post("/users", repo.CreateUser)
+	app.Get("/user", repo.FindUser)
 
 	if err := app.Listen(":8000"); err != nil {
 		log.Fatalf("server error: %v", err.Error())

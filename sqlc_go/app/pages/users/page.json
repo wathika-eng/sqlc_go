@@ -1,0 +1,11 @@
+{
+  "version": "3.4",
+  "type": "table",
+  "title": "users",
+  "hideInSidebar": false,
+  "config": {
+    "dataSource": "postgres_db_a88zeo",
+    "fetchStrategy": "databaseTable",
+    "table": "users"
+  }
+}
