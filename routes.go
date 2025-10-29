@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"sql_c/pkg/repository"
 	"strings"
@@ -69,13 +70,13 @@ func (r *Repo) CreateUser(c *fiber.Ctx) error {
 }
 
 func (r *Repo) FindUser(c *fiber.Ctx) error {
-	qEmail := c.Query("email", "")
+	qEmail := strings.ToLower(strings.TrimSpace(c.Query("email", "")))
 	if strings.Trim(qEmail, " ") == "" {
 		return c.Redirect("/users")
 	}
 	user, err := r.db.GetUserByEmail(context.Background(), qEmail)
 	if err != nil {
-		return c.Status(400).JSON(fiber.Map{"error": err.Error()})
+		return c.Status(400).JSON(fiber.Map{"error": fmt.Sprintf("user with email %v not found", qEmail)})
 	}
 	return c.JSON(user)
 }

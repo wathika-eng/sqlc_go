@@ -10,6 +10,8 @@ import (
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/helmet"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/jackc/pgx/v5"
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/spf13/viper"
@@ -53,9 +55,12 @@ func main() {
 	//repo.seed()
 	app := fiber.New()
 
+	app.Use(logger.New())
+	app.Use(helmet.New())
+
 	app.Get("/users", repo.GetUsers)
 	app.Post("/users", repo.CreateUser)
-	app.Get("/user", repo.FindUser)
+	app.Get("/users", repo.FindUser)
 
 	if err := app.Listen(":8000"); err != nil {
 		log.Fatalf("server error: %v", err.Error())
