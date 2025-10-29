@@ -1,8 +1,9 @@
+-- migrate:up transaction:false
+CREATE DATABASE sqlc_go;
+
 -- migrate:up
 -- uuid-ossp extension is required for generating UUIDs
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
-CREATE DATABASE sqlc_go;
 
 CREATE TYPE user_role AS ENUM ('admin', 'user', 'guest');
 

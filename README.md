@@ -16,6 +16,8 @@ Setting up locally:
 git clone
 cd sqlc_go
 
+go env -w GOTOOLCHAIN=go1.25+auto
+
 go mod tidy # to install dependecies
 
 cp .env.example .env # to create a local copy of the .env
@@ -25,6 +27,7 @@ npm install -g dbmate
 
 # install sqlc
 go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
+# curl -L https://github.com/sqlc-dev/sqlc/releases/download/v1.30.0/sqlc_1.30.0_linux_amd64.tar.gz | tar -xz && sudo mv sqlc /usr/local/bin/
 
 sqlc compile && sqlc vet # to verify and vet sqlc files, should be no errors
 
